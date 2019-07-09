@@ -9,8 +9,5 @@
         <module name="kong" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="kong" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
