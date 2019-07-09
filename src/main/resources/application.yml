@@ -1,0 +1,43 @@
+server:
+  port: 8080
+# 数据库连接
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/kongv0.1?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    password: root
+    username: root
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    #filters: stat
+    #maxActive: 20
+    #initialSize: 1
+    #maxWait: 60000
+    #minIdle: 1
+    #timeBetweenEvictionRunsMillis: 60000
+    #minEvictableIdleTimeMillis: 300000
+    #validationQuery: select 'x'
+    #testWhileIdle: true
+    #testOnBorrow: false
+    #testOnReturn: false
+    #poolPreparedStatements: true
+    #maxOpenPreparedStatements: 20
+
+# mybatis
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:fs/luke/kong/modules/**/*Mapper.xml
+  type-aliases-package: fs.luke.kong.modules
+  type-handlers-package:
+  executor-type: simple
+  type-aliases-super-type: fs.luke.kong.core.mapper.persistence.Page
+
+# pagehelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: countSql
+# 日志
+#logging:
+#  level: debug
