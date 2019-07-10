@@ -1,11 +1,19 @@
 package fs.luke.kong.modules.sys.entity;
 
-import fs.luke.kong.core.entity.DataEntity;
-
 import java.util.Date;
 
-public class User extends DataEntity<User> {
+public class User {
+    private String id;
 
+    private String updateBy;
+
+    private Date updateDate;
+
+    private String createBy;
+
+    private Date createDate;
+
+    private String delFlag;
 
     private String officeId;
 
@@ -29,6 +37,13 @@ public class User extends DataEntity<User> {
         this.id = id == null ? null : id.trim();
     }
 
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy == null ? null : updateBy.trim();
+    }
 
     public Date getUpdateDate() {
         return updateDate;
@@ -38,6 +53,13 @@ public class User extends DataEntity<User> {
         this.updateDate = updateDate;
     }
 
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy == null ? null : createBy.trim();
+    }
 
     public Date getCreateDate() {
         return createDate;

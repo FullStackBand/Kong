@@ -1,4 +1,4 @@
-package ddd;
+package fs.luke.kong.modules.sys.mapper;
 
 import java.util.ArrayList;
 import java.util.Date;
