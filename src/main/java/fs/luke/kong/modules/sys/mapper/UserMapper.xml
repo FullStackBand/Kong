@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fs.luke.kong.modules.sys.mapper.UserMapper">
+    <sql id="userColumns">
+        a.id as id,
+        a.update_by as 'updateBy.id',
+        a.update_date as updateDate,
+        a.create_by as 'createBy.id',
+        a.create_date as createDate,
+        a.del_flag as delFlag,
+        a.office_ID as 'office.id',
+        a.sys_user_group_ID as 'userGroup.id',
+        a.name as name,
+        a.login_name as 'loginName',
+        a.password as password,
+        a.mobile as mobile,
+        a.e_mail as eMail,
+        createBy.name as 'createBy.name',
+        updateBy.name as 'updateBy.name',
+        office.name as 'office.name'
+    </sql>
+    <sql id="userJoins">
+        left join sys_user createBy on a.create_by=createBy.id
+        left join sys_user updateBy on a.create_by=updateBy.id
+        left join sys_office office on a.office_ID=office.id
+    </sql>
+    <select id="find" parameterType="fs.luke.kong.modules.sys.entity.User"
+            resultType="fs.luke.kong.modules.sys.entity.User">
+        select
+        <include refid="userColumns"/>
+        from sys_user a
+        <include refid="userJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            ${dataScope}
+            <if test="createBy != null and createBy.id != null and createBy.id != ''">
+                AND a.create_by = #{createBy.id}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                AND a.create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy.id != null and updateBy.id != ''">
+                AND a.update_by = #{updateBy.id}
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                AND a.update_date = #{updateDate}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                AND a.del_flag = #{delFlag}
+            </if>
+            <if test="office != null and office.id != null and office.id != ''">
+                AND a.office.id = #{office.id}
+            </if>
+            <if test="userGroup != null and userGroup.id != null and userGroup.id != ''">
+                AND a.userGroup = #{userGroup.id}
+            </if>
+            <if test="name != null and name != ''">
+                AND a.name = #{name}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND a.mobile = #{mobile}
+            </if>
+            <if test="eMail != null and eMail != ''">
+                AND a.eMail = #{eMail}
+            </if>
+        </where>
+        <choose>
+            <when test="page != null and page.orderBy !=null and page.orderBy !=''">
+                ORDER By ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER By a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+    <select id="findAll" parameterType="fs.luke.kong.modules.sys.entity.User"
+            resultType="fs.luke.kong.modules.sys.entity.User">
+        select
+        <include refid="userColumns"/>
+        from sys_user a
+        <include refid="userJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            ${dataScope}
+        </where>
+        <choose>
+            <when test="page != null and page.orderBy !=null and page.orderBy !=''">
+                ORDER By ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER By a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+</mapper>
