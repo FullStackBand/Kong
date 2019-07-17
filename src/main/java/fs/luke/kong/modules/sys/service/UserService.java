@@ -1,6 +1,7 @@
 package fs.luke.kong.modules.sys.service;
 
 import fs.luke.kong.core.Service.BaseService;
+import fs.luke.kong.core.entity.Page;
 import fs.luke.kong.modules.sys.entity.User;
 import fs.luke.kong.modules.sys.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import java.util.List;
 
 
 @Service
-public class UserService implements BaseService<User> {
+public class UserService extends BaseService<User> {
     @Autowired
     private UserMapper userMapper;
 
@@ -23,7 +24,7 @@ public class UserService implements BaseService<User> {
      */
     @Override
     public User get(String id) {
-        return null;
+        return userMapper.get(id);
     }
 
     /**
@@ -34,7 +35,7 @@ public class UserService implements BaseService<User> {
      */
     @Override
     public User get(User entity) {
-        return null;
+        return userMapper.get(entity);
     }
 
     /**
@@ -56,8 +57,14 @@ public class UserService implements BaseService<User> {
      * @return
      */
     @Override
-    public List<User> find(User entity) {
-        return null;
+    public Page<User> find(Page<User> page, User entity) {
+        // 数据权限过滤器
+        dataRuleFilter(entity);
+        //设置分页参数
+        entity.setPage(page);
+        //执行分页查询
+        page.setList(userMapper.find(entity));
+        return page;
     }
 
     /**
@@ -67,8 +74,7 @@ public class UserService implements BaseService<User> {
      * @Param entity
      */
     @Override
-    public int insert(User entity) {
-        return 0;
+    public void insert(User entity) {
     }
 
     /**
@@ -96,7 +102,6 @@ public class UserService implements BaseService<User> {
      *
      * @param entity
      */
-    @Override
     public void update(User entity) {
 
     }

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -33,10 +35,8 @@ public class userController {
 
     @ResponseBody
     @RequestMapping("list")
-    public Page<User> getList(User user) {
-        List<User> list = userService.findAll(user);
-        Page<User> userPage = new Page<>();
-        userPage.setList(list);
-        return userPage;
+    public Page<User> getList(HttpServletRequest request, HttpServletResponse response, User user) {
+        userService.find(new Page<User>(request,response), user);
+        return null;
     }
 }

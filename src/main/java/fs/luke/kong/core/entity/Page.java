@@ -40,6 +40,16 @@ public class Page<T> {
     /**
      * 构造方法
      *
+     * @param request  传递 repage 参数，来记住页码
+     * @param response 用于设置 Cookie，记住页码
+     */
+    public Page(HttpServletRequest request, HttpServletResponse response) {
+        this(request, response, -2);
+    }
+
+    /**
+     * 构造方法
+     *
      * @param request         传递 repage 参数，来记住页码
      * @param response        用于设置 Cookie，记住页码
      * @param defaultPageSize 默认分页大小，如果传递 -1 则为不分页，返回所有数据
@@ -69,10 +79,10 @@ public class Page<T> {
             if (StringUtils.isNumeric(pageSize)) {
                 this.pageSize = Integer.parseInt(pageSize);
             }
-        } else if (defaultPageSize > -1) {
+        } else if (defaultPageSize != -2) {
             // 如果默认的大于 -1 则表示用户正常赋值 , 则直接写入页面大小
             this.pageSize = defaultPageSize;
-        } else {
+        } else if ("-1".equals(pageSize)) {
             // 其余 默认为-1 , -1表示不分页
             this.pageSize = -1;
         }

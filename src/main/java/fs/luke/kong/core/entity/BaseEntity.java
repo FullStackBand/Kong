@@ -1,6 +1,8 @@
 package fs.luke.kong.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fs.luke.kong.modules.sys.entity.User;
+import fs.luke.kong.modules.sys.utils.UserUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -61,6 +63,7 @@ public abstract class BaseEntity<T> implements Serializable {
      * 删除标记（0：正常；1：删除；2：审核；）
      */
     private String delFlag;
+    private User currentUser;
 
     public BaseEntity() {
 
@@ -99,6 +102,19 @@ public abstract class BaseEntity<T> implements Serializable {
     @JsonIgnore
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    @JsonIgnore
+    @XmlTransient
+    public User getCurrentUser() {
+        if (currentUser == null) {
+            currentUser = UserUtils.getUser();
+        }
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
     /**
@@ -159,6 +175,7 @@ public abstract class BaseEntity<T> implements Serializable {
     public void setNewRecord(boolean newRecord) {
         isNewRecord = newRecord;
     }
+
     @JsonIgnore
     public String getIdType() {
         return IdType;

@@ -1,19 +1,27 @@
 package fs.luke.kong.core.mapper;
 
+import fs.luke.kong.core.entity.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional(readOnly = true)
 public interface BaseMapper<T> {
 
     /**
      * 根据ID查询
      *
-     * @param entity
-     * @return
+     * @param id
+     * @return T
      */
-    T getById(T entity);
+    T get(String id);
+
+    /**
+     * 根据entity 条件查询
+     *
+     * @param entity
+     * @return T
+     */
+    T get(T entity);
 
     /**
      * 查找所有
@@ -24,19 +32,18 @@ public interface BaseMapper<T> {
     List<T> findAll(T entity);
 
     /**
-     * 根据条件查询
+     * 根据条件查询 分页
      *
      * @param entity
      * @return
      */
-    List<T> find(T entity);
+    List<T> find( T entity);
 
     /**
      * 保存一条
      *
      * @Param entity
      */
-    @Transactional(readOnly = false)
     int insert(T entity);
 
     /**
@@ -44,7 +51,6 @@ public interface BaseMapper<T> {
      *
      * @param entity
      */
-    @Transactional(readOnly = false)
     void delete(T entity);
 
     /**
@@ -52,7 +58,6 @@ public interface BaseMapper<T> {
      *
      * @param entity
      */
-    @Transactional(readOnly = false)
     void deleteLogic(T entity);
 
     /**
