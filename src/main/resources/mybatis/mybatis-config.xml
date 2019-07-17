@@ -40,8 +40,8 @@
         <setting name="jdbcTypeForNull" value="NULL"/>
 
     </settings>
-<!--<mappers>
-    <package name=""></package>
-</mappers>-->
+    <plugins>
+        <plugin interceptor="fs.luke.kong.core.mapper.PageInterceptor"></plugin>
+    </plugins>
 
 </configuration>
